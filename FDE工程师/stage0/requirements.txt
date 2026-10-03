@@ -1,3 +1,0 @@
-mcp>=2.0
-pydantic>=2.12
-anyio>=4.9
