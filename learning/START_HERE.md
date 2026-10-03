@@ -145,61 +145,44 @@
 
 ---
 
-## 5. 你的 git 仓库在哪（你问过的）
+## 5. 你的 git 仓库在哪（已经推上 GitHub 了）
 
-**仓库根目录就是 `C:\Users\admin\Desktop\学习`**，版本库本体是这个隐藏文件夹：
+**本机仓库根目录**：`C:\Users\admin\Desktop\学习`，版本库本体是隐藏目录 `C:\Users\admin\Desktop\学习\.git\`
 
-```
-C:\Users\admin\Desktop\学习\.git\      <- 所有历史都在这里，约 0.17 MB
-```
-
-自己怎么确认：
-
-```powershell
-cd C:\Users\admin\Desktop\学习
-git rev-parse --show-toplevel    # 打印仓库根目录
-git log --oneline                # 看历史
-git remote -v                    # 看有没有远程仓库
-```
-
-当前状态（我逐个核对过的）：
+**线上地址**：**https://github.com/xuchenhan0402/ai-app-fde-journey**
 
 | 项 | 值 |
 | --- | --- |
-| 仓库根 | `C:/Users/admin/Desktop/学习` |
-| 分支 | `main`（2026-10-03 从 `master` 改名，对齐 GitHub 默认） |
-| 提交 | 4 个：`df990a4` 基线 → `ad79865` 路线与启动包 → `8801ab4` 删重复副本 → `05bd481` git 说明 |
-| 跟踪文件 | 79 个 |
-| 提交者 | `xch <xch@local>`（**只在本仓库生效**，没动你电脑的全局配置） |
-| 凭证助手 | Git Credential Manager 2.8.0（已配好，推送时会弹浏览器让你登 GitHub） |
-| 远程仓库 | ⚠️ **没有** |
+| GitHub 账号 | `xuchenhan0402` |
+| 仓库 | `ai-app-fde-journey`（public，2026-10-03 创建） |
+| 分支 | `main`（从 `master` 改名，对齐 GitHub 默认） |
+| 提交 | 5 个，作者 `xuchenhan0402 <217203106+xuchenhan0402@users.noreply.github.com>` |
+| 跟踪文件 | 79 个（本地与远端一致，已用 API 核对） |
+| 远端 remote | `origin` = `https://github.com/xuchenhan0402/ai-app-fde-journey.git` |
 
-> ⚠️ **"没有远程仓库"的意思是：这块硬盘坏了，一切归零。**
-> 你到现在为止的全部学习资产，只存在于一个物理位置。
-> 而第 4 周要投简历时，技术面第一句往往是"把你 GitHub 发我看看"。
-
-**推送到 GitHub（环境我已配好并实测通过）**：
+**以后每天怎么保存**（这就是"没有 commit 的一天等于没发生"的执行动作）：
 
 ```powershell
-# 1) 先在 GitHub 网页上建一个空仓库
-#    不要勾 "Add a README file" / .gitignore / license，否则推送会冲突
-# 2) 回到本地，绑定并推送：
 cd C:\Users\admin\Desktop\学习
-git remote add origin https://github.com/<你的用户名>/<仓库名>.git
-git push -u origin main
+git add -A
+git commit -m "stage0: 手写 MCP 客户端跑通，记录 3 个协议坑"
+git push
 ```
 
-网络环境说明（这几条是我实跑出来的，不是猜的）：
-- 你本机跑着代理 `127.0.0.1:7890`，系统代理已开，git 全局配置里也有 `http.proxy=http://127.0.0.1:7890`
-- `git ls-remote https://github.com/octocat/Hello-World.git HEAD` 返回 exit 0 —— **git 能连通 GitHub**，不用再折腾网络
-- 推送时的登录由 Git Credential Manager 弹浏览器完成（你 Chrome 里 GitHub 已经登着，点两下就完）
-- git 本体在非标准位置：`D:\企业课\Git`（不在 C 盘默认路径，以后找不到命令时记着这点）
+推送**不需要**再输密码：你的 GitHub 凭据已经存在 Windows 凭据管理器里
+（`LegacyGeneric:target=git:https://xuchenhan0402@github.com`），git 会自动取用。
 
-**注意**：`AI应用开发/stage0/.env`（里面有你的 API Key）我已经复制到 `learning/ai-app/stage0/.env`，
-它被 `.gitignore` 排除，**不会**进入 git 历史。我扫过全部 79 个已跟踪文件的密钥模式（`sk-` / `api_key=` / `Bearer `/ `ghp_`），**零命中**，可以安全公开。删旧副本不影响你运行 stage0–stage4 的代码。
+**安全状态（我实测核对过，不是估计）**：
+- `learning/ai-app/stage0/.env`（含你的 API Key）被 `.gitignore` 拦住，**没有**上传。我用 GitHub API 拉回远端文件清单逐条比对：79 个文件里唯一含 `.env` 字样的是 `.env.example`（占位符，不是真 key）
+- 全部 79 个已跟踪文件扫过 `sk-` / `api_key=` / `Bearer ` / `ghp_` 四种密钥模式：**零命中**
+- 推送用的 token 只在内存里用了一次，**没有**写进 `.git/config`（我复查过配置文件，干净）
 
----
+> ⚠️ **关于代理**：你本机跑着 `127.0.0.1:7890`，系统代理已开，git 全局配置里也有 `http.proxy`。
+> 如果哪天 proxy 软件没开，`git push` 会失败（连接被拒）。**先确认代理软件在跑，再 push。**
+> 这是你这台机器上唯一一个外部依赖。
 
+> **另一个提醒**：你 GitHub 上还有一个 2025-06-20 更新的旧仓库 `study`（public）。
+> 以后简历上放哪个链接、要不要把那一个归档或删掉，等你做出第一个作品时我们再决定。
 ## 6. 这个仓库怎么用（目录约定）
 
 ```
