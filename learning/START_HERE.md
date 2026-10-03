@@ -149,16 +149,16 @@
 
 **本机仓库根目录**：`C:\Users\admin\Desktop\学习`，版本库本体是隐藏目录 `C:\Users\admin\Desktop\学习\.git`（约 0.17 MB）
 
-**线上地址**：**https://github.com/xuchenhan0402/ai-app-fde-journey**
+**线上地址**：**https://github.com/yloi39s2gz-cell/ai-app-fde-journey**
 
 | 项 | 值 |
 | --- | --- |
-| GitHub 账号 | `xuchenhan0402` |
+| GitHub 账号 | `yloi39s2gz-cell`（Xu Chen H） |
 | 仓库 | `ai-app-fde-journey`（public，2026-10-03 创建） |
 | 分支 | `main`（从 `master` 改名，对齐 GitHub 默认） |
-| 提交 | 5 个，作者 `xuchenhan0402 <217203106+xuchenhan0402@users.noreply.github.com>` |
+| 提交 | 7 个，作者 `yloi39s2gz-cell <280034746+yloi39s2gz-cell@users.noreply.github.com>` |
 | 跟踪文件 | 79 个（本地与远端一致，已用 API 核对） |
-| 远端 remote | `origin` = `https://github.com/xuchenhan0402/ai-app-fde-journey.git` |
+| 远端 remote | `origin` = `https://github.com/yloi39s2gz-cell/ai-app-fde-journey.git` |
 
 **以后每天怎么保存**（这就是"没有 commit 的一天等于没发生"的执行动作）：
 
@@ -169,8 +169,8 @@ git commit -m "stage0: 手写 MCP 客户端跑通，记录 3 个协议坑"
 git push
 ```
 
-推送**不需要**再输密码：你的 GitHub 凭据已经存在 Windows 凭据管理器里
-（`LegacyGeneric:target=git:https://xuchenhan0402@github.com`），git 会自动取用。
+推送时如果 git 让你输用户名密码，**用户名填 `yloi39s2gz-cell`，密码填一个 Personal Access Token**（不是登录密码，GitHub 早就禁止用密码推送了）。
+Token 在这里生成：github.com → 头像 → Settings → Developer settings → Personal access tokens → Tokens (classic) → Generate new token，勾 `repo` 一个就够。用完可以随时 Revoke。
 
 **安全状态（我实测核对过，不是估计）**：
 - `learning/ai-app/stage0/.env`（含你的 API Key）被 `.gitignore` 拦住，**没有**上传。我用 GitHub API 拉回远端文件清单逐条比对：79 个文件里唯一含 `.env` 字样的是 `.env.example`（占位符，不是真 key）
@@ -183,6 +183,9 @@ git push
 
 > **另一个提醒**：你 GitHub 上还有一个 2025-06-20 更新的旧仓库 `study`（public）。
 > 以后简历上放哪个链接、要不要把那一个归档或删掉，等你做出第一个作品时我们再决定。
+
+> **历史遗留**：`xuchenhan0402` 账号下曾误建过一个同名的 `ai-app-fde-journey` 仓库，已改成 private，无害。能登那个账号的话可以彻底删掉。
+
 ## 6. 这个仓库怎么用（目录约定）
 
 ```
