@@ -147,7 +147,7 @@
 
 ## 5. 你的 git 仓库在哪（已经推上 GitHub 了）
 
-**本机仓库根目录**：`C:\Users\admin\Desktop\学习`，版本库本体是隐藏目录 `C:\Users\admin\Desktop\学习\.git\`
+**本机仓库根目录**：`C:\Users\admin\Desktop\学习`，版本库本体是隐藏目录 `C:\Users\admin\Desktop\学习\.git`（约 0.17 MB）
 
 **线上地址**：**https://github.com/xuchenhan0402/ai-app-fde-journey**
 
