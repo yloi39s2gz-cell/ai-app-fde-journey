@@ -147,38 +147,56 @@
 
 ## 5. 你的 git 仓库在哪（你问过的）
 
-**仓库根目录就是 \`C:\Users\admin\Desktop\学习\`**，版本库本体是这个隐藏文件夹：
+**仓库根目录就是 `C:\Users\admin\Desktop\学习`**，版本库本体是这个隐藏文件夹：
 
-\`\`\`
+```
 C:\Users\admin\Desktop\学习\.git\      <- 所有历史都在这里，约 0.17 MB
-\`\`\`
+```
 
 自己怎么确认：
 
-\`\`\`powershell
+```powershell
 cd C:\Users\admin\Desktop\学习
 git rev-parse --show-toplevel    # 打印仓库根目录
 git log --oneline                # 看历史
 git remote -v                    # 看有没有远程仓库
-\`\`\`
+```
 
 当前状态（我逐个核对过的）：
 
 | 项 | 值 |
 | --- | --- |
-| 仓库根 | \`C:/Users/admin/Desktop/学习\` |
-| 分支 | \`master\` |
-| 提交 | 3 个：\`df990a4\` 基线 → \`ad79865\` 路线与启动包 → \`8801ab4\` 删除重复副本 |
+| 仓库根 | `C:/Users/admin/Desktop/学习` |
+| 分支 | `main`（2026-10-03 从 `master` 改名，对齐 GitHub 默认） |
+| 提交 | 4 个：`df990a4` 基线 → `ad79865` 路线与启动包 → `8801ab4` 删重复副本 → `05bd481` git 说明 |
 | 跟踪文件 | 79 个 |
-| 提交者 | \`xch <xch@local>\`（**只在本仓库生效**，没动你电脑的全局配置） |
+| 提交者 | `xch <xch@local>`（**只在本仓库生效**，没动你电脑的全局配置） |
+| 凭证助手 | Git Credential Manager 2.8.0（已配好，推送时会弹浏览器让你登 GitHub） |
 | 远程仓库 | ⚠️ **没有** |
 
 > ⚠️ **"没有远程仓库"的意思是：这块硬盘坏了，一切归零。**
 > 你到现在为止的全部学习资产，只存在于一个物理位置。
 > 而第 4 周要投简历时，技术面第一句往往是"把你 GitHub 发我看看"。
 
-**注意**：\`AI应用开发/stage0/.env\`（里面有你的 API Key）我已经复制到 \`learning/ai-app/stage0/.env\`，
-它被 \`.gitignore\` 排除，**不会**进入 git 历史，也不会被我提交。删旧副本不影响你运行 stage0–stage4 的代码。
+**推送到 GitHub（环境我已配好并实测通过）**：
+
+```powershell
+# 1) 先在 GitHub 网页上建一个空仓库
+#    不要勾 "Add a README file" / .gitignore / license，否则推送会冲突
+# 2) 回到本地，绑定并推送：
+cd C:\Users\admin\Desktop\学习
+git remote add origin https://github.com/<你的用户名>/<仓库名>.git
+git push -u origin main
+```
+
+网络环境说明（这几条是我实跑出来的，不是猜的）：
+- 你本机跑着代理 `127.0.0.1:7890`，系统代理已开，git 全局配置里也有 `http.proxy=http://127.0.0.1:7890`
+- `git ls-remote https://github.com/octocat/Hello-World.git HEAD` 返回 exit 0 —— **git 能连通 GitHub**，不用再折腾网络
+- 推送时的登录由 Git Credential Manager 弹浏览器完成（你 Chrome 里 GitHub 已经登着，点两下就完）
+- git 本体在非标准位置：`D:\企业课\Git`（不在 C 盘默认路径，以后找不到命令时记着这点）
+
+**注意**：`AI应用开发/stage0/.env`（里面有你的 API Key）我已经复制到 `learning/ai-app/stage0/.env`，
+它被 `.gitignore` 排除，**不会**进入 git 历史。我扫过全部 79 个已跟踪文件的密钥模式（`sk-` / `api_key=` / `Bearer `/ `ghp_`），**零命中**，可以安全公开。删旧副本不影响你运行 stage0–stage4 的代码。
 
 ---
 
