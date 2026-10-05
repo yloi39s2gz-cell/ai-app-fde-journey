@@ -108,7 +108,7 @@
 | --- | --- | --- |
 | FastAPI 服务化 | 把 fde/stage0 的工单系统包成 HTTP（GET/POST） | 窗口一 D5 |
 | 流式输出 | 加 `/ask`，用 SSE 逐 token 推 | 窗口一 D6 |
-| 向量库 | 装 Chroma，重跑 stage5 的检索对比 | 窗口一 D17（旁支） |
+| 向量库 | 装 Chroma，重跑 stage5 的检索对比 | 窗口一 D17 之后（可选旁支） |
 | 原生 Function Calling | 把 stage4 的 JSON 解析改成 tools 参数 | 窗口一 D9 |
 | 多智能体编排 | LangGraph 里做双节点协作 | 窗口一 D12（旁支） |
 | Docker | 作品 Dockerfile + compose | 窗口一 D26 |

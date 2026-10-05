@@ -95,7 +95,7 @@
 | D1 | ✅ **已完成**：删掉顶层 `AI应用开发/` 与 `FDE工程师/` 旧副本（已逐个 SHA256 校验，learning/ 是完整超集） | tracked 文件 128 → 79，`git status` 干净 |
 | D2 | 完成 [FDE stage0 启动包](learning/fde/stage0/START_HERE.md)：读代码答 3 题 | notes.md 里有你自己的话，不是定义 |
 | D3 | 手写 MCP 调试客户端（填完 client_demo.py 的 5 个 TODO） | `python client_demo.py` 打印 4 个 tool + 3 次调用结果，程序不崩 |
-| D4 | 填完 fde/stage0 的 notes.md + questions.md 6 题 | 6 题全有答案；写不出的写"卡在哪" |
+| D4 | 填完 fde/stage0 的 notes.md + questions.md 6 题。**附加 10 分钟决策**：FDE 要 25–50% 出差（Deloitte 明确 50%），你接不接受？不接受就把 FDE 从 P0 降级，时间全给 AI 应用岗 | 6 题全有答案；写不出的写"卡在哪" + 一行 FDE 去留结论 |
 | D5 | **FastAPI 入门**：把 fde/stage0 的工单系统包一层 HTTP 接口（GET /tickets、POST /tickets） | `uvicorn` 起得来，浏览器打开 /docs 能看到接口 |
 | D6 | 流式输出：加一个 /ask 接口，用 SSE 把 LLM 的 token 一个个推给前端 | `curl` 能看到逐字返回，不是等 3 秒一次性出来 |
 | D7 | 收尾周：写 README（怎么跑、截图/CURL 示例） | **☆ 本周产出：一个能在你本机跑起来、有文档的 HTTP 服务** |
@@ -111,10 +111,10 @@
 | 天 | 主任务 | 产出 |
 | --- | --- | --- |
 | D8 | 装 LangGraph，跑通官方 quickstart（最小 ReAct） | 一个 30 行的能跑的 demo |
-| D9 | 把你的 stage4 工具（search_handbook / calculator …）接进 LangGraph | 工具被调用，trace 能打印 |
+| D9 | 把你的 stage4 工具（search_handbook / calculator …）接进 LangGraph。**顺手改用模型原生的 `tools` 参数**（而不是继续手写 JSON schema 自己解析） | 工具被调用，trace 里出现模型自己产生的 `tool_calls` |
 | D10 | 加上"人在回路"：写操作（create_ticket）**必须人工确认**才执行 | 演示：拒绝确认时工具不执行 |
 | D11 | 加上状态持久化（MemorySaver / 检查点），能做多轮 | 关掉进程再回来，对话还在 |
-| D12 | 用 LangGraph 重写 stage4 的 10 题评测，跑出准确率 | **一张对比表：手写 Agent vs LangGraph** |
+| D12 | 用 LangGraph 重写 stage4 的 10 题评测，跑出准确率。**评测指标从"对不对"扩到三个：工具调用准确率 / 平均步数 / 单次任务成本**。旁支：做一版**双 Agent 编排**（检索 Agent → 审核 Agent） | **一张对比表：手写 Agent vs LangGraph（含三个新指标 + 一张编排图）** |
 | D13 | 写 notes：什么场景该用框架、什么场景手写更好 | 你自己的判断，不是官方话术 |
 | D14 | 收尾：更新 README，git 提交 | **☆ 本周产出：一张"手写 vs 框架"的对比表 + 能演示的 Agent** |
 
@@ -133,11 +133,22 @@
 | D17 | 加 chunk 消融：把语料从 5 篇扩到 15+ 篇，否则 chunk 实验没有意义 | 一张 chunk_size 对比表（150/300/500/800） |
 | D18 | 加 hybrid + rerank 在新 embedder 下的对比 | 一张四路对比表（dense / sparse / hybrid / rerank） |
 | D19 | 换掉 BM25Reranker，试真 cross-encoder（bge-reranker-base，本地 CPU 能跑） | R@1 或 MRR 的进一步变化（哪怕没有，也是结论） |
-| D20 | 写"检索升级"的完整报告：改了什么、数字怎么变、为什么 | 一份能贴在简历背后的报告 |
-| D21 | 收尾：更新 [stage5/notes.md](learning/ai-app/stage5/notes.md) | **☆ 本周产出：一张含真实 embedding 的检索对比表** |
+| D20 | **评测总入口 `run_all.py`**：把 stage2/3/4/5 的评测脚本收成一条命令；同时加两样 → ① **LLM-as-judge 自动判分**（stage5 遗留 TODO）② **引用支持率**（答案每句话能否在检索到的 chunk 里找到出处 = 幻觉率） | 一条命令跑完全部评测；拿到 **"引用支持率 XX%"** 这个数字 |
+| D21 | 写"检索升级"的完整报告（改了什么、数字怎么变、为什么）+ 更新 [stage5/notes.md](learning/ai-app/stage5/notes.md) | **☆ 本周产出：一张含真实 embedding 的检索对比表 + 一份能贴在简历背后的评测报告** |
+
+> **为什么 D20 要加"评测"而不是多写一份报告**：报告里如果只有 R@1/MRR，那是**检索指标**，不是**应用质量指标**。
+> 加上引用支持率之后，这份报告才能同时回答两个岗位的问题——
+> [AI 应用工程师](job-market/positions/ai-application-engineer/README.md)要的"效果评估体系"（7/11 家 JD 要求）、
+> 以及 [AI 测试/评测工程师](job-market/positions/ai-evaluation-engineer/README.md)要的"幻觉检测"。
+> 同样的工作量，多一个岗位可投。详见 [EV-1/EV-2/EV-3/EV-5](job-market/positions/ai-evaluation-engineer/README.md) 与 [AG-5](job-market/positions/agent-engineer/README.md)。
 
 **这一周做完，你就有了整个仓库最值钱的一句话**：
 "我发现初版哈希向量在同义改写题上 R@1 只有 47%，换成真 embedding 后提升到 XX%，并做了混合检索与重排的消融。"
+
+> **可选旁支（不要塞进 D17）**：把 [stage5/index.py](learning/ai-app/stage5/index.py) 的后端从手写 store 换成 **Chroma**，
+> 再跑一遍同一套对比题。这对应 JD 里的"向量库"要求（[T6](job-market/能力差距总表.md)，~9/20 家）。
+> 但它**必须单独做**——D17 那天已经在改"语料规模"这一个变量，同一天再换 store 后端就变成两个变量一起动，
+> 消融表会失去解释力。D17 顺利就在周末补，排不上就推到窗口二，不影响主线。
 
 ### 第 4 周（10-25 → 11-02）｜作品集第一步 + 开始投递动作
 
@@ -154,17 +165,46 @@
 
 ---
 
+### 窗口一内的「零成本包装」任务（各 0.5 天，插在任意一个周末，不占主任务）
+
+这三条不属于任何一天的主线，但都是**只花半小时、却直接换一个岗位可投状态**的动作。
+它们来自市场情报里的 P2/P3 岗位（[job-market/INDEX.md](job-market/INDEX.md)），不做主攻，但放弃可惜：
+
+| # | 任务 | 产出 | 服务哪个岗位 |
+| --- | --- | --- | --- |
+| PM-A1 | 写一张**成本速算表**：用 stage1 的记账客户端算出 ① 单次问答 token 成本 ② 10 万次调用总成本 ③ RAG 比纯提示工程每次多花多少 | 一张能当场口算的表 | [AI 产品经理](job-market/positions/ai-product-manager/学习计划.md)（面试必问"调 10 万次多少钱"） |
+| PM-A2 | 把 stage4（注入防御）和 stage5（检索消融）改写成「**我决定 X / 否掉了 Y / 因为 Z**」 | 2 份决策记录 | AI PM + 所有岗位（项目经历看"主导"不看"参与"） |
+| PM-A3 | 写**一页技术边界说明**：LLM 能干什么、不能干什么、≥5 个你亲自踩过的坑 | 一页纸 | AI PM + [解决方案架构师](job-market/positions/ai-solution-architect/README.md) |
+| BE-1 | **量化你自己的 AI 使用效率**：记录一周内用 AI 完成了哪些事，算出"如果没有 AI 要多久" | 一个具体百分比 + 3 个案例 | [AI 业务效能岗](job-market/positions/ai-business-efficiency/README.md)（兜底位） |
+
+> PM-A1/A2/A3 就是 [AI 产品经理学习计划](job-market/positions/ai-product-manager/学习计划.md) 第 1 节里说的"唯一要做的事"——
+> 该计划判定**不做主攻**（3/5 家 JD 要 3 年 B 端产品经验，是时间门槛不是能力门槛），但上面这四条加起来不到 2 小时。
+> 注意：这三条**也是 AI 应用工程师 / FDE 面试的加分项**，不是为 AI PM 白花的。
+
+---
+
 ## 3. 窗口二：90 天（→ 2027-01-02）
 
 30 天结束后，你手上会有：一个公网作品、一张检索对比表、一个 LangGraph Agent、一份 v1 简历。
-90 天要补的是**广度 + 投递量**：
+90 天要补的是**广度 + 投递量**。这一窗口的任务来自市场情报（[job-market/](job-market/README.md)），不是凭空排的：
 
-- **第 2 个月**：第二个作品（选一个有真实行业味道的，比如"合同审阅助手"或"客服工单自动分派"）；
-  Dify / Coze 各花 2 天摸一遍（面试会问"你会不会用低代码平台"）；
-  RAGAS 式评测：把"引用是否支持答案"做成自动判分（这是你 stage5 遗留的 TODO）。
-- **第 3 个月**：MCP 从"能跑"升级到"能交付"（权限、审计、错误处理、超时）；
-  做一次 **20 题模拟面试**（我出题，你口述，我挑毛病）；
-  投递量提到每周 10+，开始有真实面试。
+| 时间 | 任务 | 来自哪个岗位的缺口 | 产出 |
+| --- | --- | --- | --- |
+| 第 2 个月 | 第二个作品（选一个有真实行业味道的，比如"合同审阅助手"或"客服工单自动分派"） | [AI 应用工程师](job-market/positions/ai-application-engineer/README.md) | 第二个可演示作品 |
+| 第 2 个月 | Dify / Coze 各花 2 天摸一遍（面试会问"你会不会用低代码平台"） | 技能出现率 Dify ~35% | 两个能跑通的小流程 |
+| 第 2 个月 | **EV-4 安全评测矩阵**（注入 / 越狱 / 越权 / 数据泄露，4 类 × 10 例） | [AI 评测工程师](job-market/positions/ai-evaluation-engineer/README.md) | 一张安全评测通过率表 |
+| 第 2 个月 | **EV-6 稳定性测试**（同一评测集跑 5 次，记录方差） | 同上 | 5 次运行的方差数字 |
+| 第 2 个月 | **AG-6 工具权限**（给工具分角色：读 / 写 / 管理） | [Agent 开发工程师](job-market/positions/agent-engineer/README.md) | 演示：低权限角色调不动删除工具 |
+| 第 2 个月 | **FDE 沟通线 C 栏 7 条**（含"3 份模糊需求 → 一页方案"、"对不切实际的期望说不"） | [FDE](job-market/positions/fde/学习计划.md) | 一页方案 × 3 |
+| 第 3 个月 | MCP 从"能跑"升级到"能交付"（权限、审计、错误处理、超时） | [FDE](job-market/positions/fde/README.md) | 一个能被别人用的 MCP server |
+| 第 3 个月 | **FDE 商业线 B 栏 4 条**（ROI 计算、成本核算：这个功能调 10 万次要多少钱） | FDE + [AI 产品经理](job-market/positions/ai-product-manager/README.md) | 一张成本速算表 |
+| 第 3 个月 | **SA-1 技术方案文档**：把作品包装成"给客户的方案"（痛点 / 方案 / 架构 / 报价 / 里程碑） | [解决方案架构师](job-market/positions/ai-solution-architect/README.md) | 一份 5–8 页方案 |
+| 第 3 个月 | 做一次 **20 题模拟面试**（我出题，你口述，我挑毛病） | 通用 | 20 题录音 + 复盘 |
+| 第 3 个月 | 投递量提到每周 10+ | 通用 | 投递记录表 |
+
+> **FDE 任务为什么放在这里而不是窗口一**：[FDE 计划第 6.1 节](learning/fde/FDE-拿offer学习计划.md) 查出它的配比应该是
+> 技术 40% / 沟通 35% / 商业 25%，而原计划是 85 / 12 / 3。
+> 补那 60% 需要**先把技术地基打完**（窗口一），否则沟通练习没有真东西可讲。
 
 ## 4. 窗口三：8 个月（→ 2027-06）
 
