@@ -95,7 +95,7 @@
 | D1 | ✅ **已完成**：删掉顶层 `AI应用开发/` 与 `FDE工程师/` 旧副本（已逐个 SHA256 校验，learning/ 是完整超集） | tracked 文件 128 → 79，`git status` 干净 |
 | D2 | 完成 [FDE stage0 启动包](learning/fde/stage0/START_HERE.md)：读代码答 3 题 | notes.md 里有你自己的话，不是定义 |
 | D3 | 手写 MCP 调试客户端（填完 client_demo.py 的 5 个 TODO） | `python client_demo.py` 打印 4 个 tool + 3 次调用结果，程序不崩 |
-| D4 | 填完 fde/stage0 的 notes.md + questions.md 6 题。**附加 10 分钟决策**：FDE 要 25–50% 出差（Deloitte 明确 50%），你接不接受？不接受就把 FDE 从 P0 降级，时间全给 AI 应用岗 | 6 题全有答案；写不出的写"卡在哪" + 一行 FDE 去留结论 |
+| D4 | 填完 fde/stage0 的 notes.md + questions.md 6 题。**附加 10 分钟决策**：FDE 要 25–50% 出差——**蚂蚁集团的岗位名原文就写着"出差面客驻场"**，Deloitte 明确 50%。你接不接受？不接受就把 FDE 从 P0 降级，时间全给 AI 应用岗 | 6 题全有答案；写不出的写"卡在哪" + 一行 FDE 去留结论 |
 | D5 | **FastAPI 入门**：把 fde/stage0 的工单系统包一层 HTTP 接口（GET /tickets、POST /tickets） | `uvicorn` 起得来，浏览器打开 /docs 能看到接口 |
 | D6 | 流式输出：加一个 /ask 接口，用 SSE 把 LLM 的 token 一个个推给前端 | `curl` 能看到逐字返回，不是等 3 秒一次性出来 |
 | D7 | 收尾周：写 README（怎么跑、截图/CURL 示例） | **☆ 本周产出：一个能在你本机跑起来、有文档的 HTTP 服务** |
@@ -114,7 +114,7 @@
 | D9 | 把你的 stage4 工具（search_handbook / calculator …）接进 LangGraph。**顺手改用模型原生的 `tools` 参数**（而不是继续手写 JSON schema 自己解析） | 工具被调用，trace 里出现模型自己产生的 `tool_calls` |
 | D10 | 加上"人在回路"：写操作（create_ticket）**必须人工确认**才执行 | 演示：拒绝确认时工具不执行 |
 | D11 | 加上状态持久化（MemorySaver / 检查点），能做多轮 | 关掉进程再回来，对话还在 |
-| D12 | 用 LangGraph 重写 stage4 的 10 题评测，跑出准确率。**评测指标从"对不对"扩到三个：工具调用准确率 / 平均步数 / 单次任务成本**。旁支：做一版**双 Agent 编排**（检索 Agent → 审核 Agent） | **一张对比表：手写 Agent vs LangGraph（含三个新指标 + 一张编排图）** |
+| D12 | 用 LangGraph 重写 stage4 的 10 题评测，跑出准确率。**评测指标从"对不对"扩到三个，措辞对齐 JD 原话：工具调用成功率 / 规划能力 / 单次任务成本**（上海AI实验室 JD："熟悉 Agent 的评估指标，不仅限于文本生成质量，还包括规划能力、工具调用成功率等维度"）。旁支：做一版**双 Agent 编排**（检索 Agent → 审核 Agent）。**顺手把 stage4 的 while 循环在 notes 里明确命名为 ReAct（think/act/observe）** | **一张对比表：手写 Agent vs LangGraph（含三个新指标 + 一张编排图）** |
 | D13 | 写 notes：什么场景该用框架、什么场景手写更好 | 你自己的判断，不是官方话术 |
 | D14 | 收尾：更新 README，git 提交 | **☆ 本周产出：一张"手写 vs 框架"的对比表 + 能演示的 Agent** |
 
@@ -133,7 +133,7 @@
 | D17 | 加 chunk 消融：把语料从 5 篇扩到 15+ 篇，否则 chunk 实验没有意义 | 一张 chunk_size 对比表（150/300/500/800） |
 | D18 | 加 hybrid + rerank 在新 embedder 下的对比 | 一张四路对比表（dense / sparse / hybrid / rerank） |
 | D19 | 换掉 BM25Reranker，试真 cross-encoder（bge-reranker-base，本地 CPU 能跑） | R@1 或 MRR 的进一步变化（哪怕没有，也是结论） |
-| D20 | **评测总入口 `run_all.py`**：把 stage2/3/4/5 的评测脚本收成一条命令；同时加两样 → ① **LLM-as-judge 自动判分**（stage5 遗留 TODO）② **引用支持率**（答案每句话能否在检索到的 chunk 里找到出处 = 幻觉率） | 一条命令跑完全部评测；拿到 **"引用支持率 XX%"** 这个数字 |
+| D20 | **评测总入口 `run_all.py`**：把 stage2/3/4/5 的评测脚本收成一条命令；**配置外置成 `eval_config.yaml`**（对上 JD 原话"熟悉 JSON、YAML"）；同时加两样 → ① **LLM-as-judge 自动判分**（stage5 遗留 TODO）② **引用支持率**（答案每句话能否在检索到的 chunk 里找到出处 = 幻觉率） | 一条命令跑完全部评测；拿到 **"引用支持率 XX%"** 这个数字；改配置不用改代码 |
 | D21 | 写"检索升级"的完整报告（改了什么、数字怎么变、为什么）+ 更新 [stage5/notes.md](learning/ai-app/stage5/notes.md) | **☆ 本周产出：一张含真实 embedding 的检索对比表 + 一份能贴在简历背后的评测报告** |
 
 > **为什么 D20 要加"评测"而不是多写一份报告**：报告里如果只有 R@1/MRR，那是**检索指标**，不是**应用质量指标**。
@@ -194,6 +194,7 @@
 | 第 2 个月 | Dify / Coze 各花 2 天摸一遍（面试会问"你会不会用低代码平台"） | 技能出现率 Dify ~35% | 两个能跑通的小流程 |
 | 第 2 个月 | **EV-4 安全评测矩阵**（注入 / 越狱 / 越权 / 数据泄露，4 类 × 10 例） | [AI 评测工程师](job-market/positions/ai-evaluation-engineer/README.md) | 一张安全评测通过率表 |
 | 第 2 个月 | **EV-6 稳定性测试**（同一评测集跑 5 次，记录方差） | 同上 | 5 次运行的方差数字 |
+| 第 2 个月 | **EV-7 复现一个开源 Benchmark**（跑通 RAGAS 或 OpenCompass 的评测子集，产出一份对比） | [AI 评测工程师](job-market/positions/ai-evaluation-engineer/README.md)（JD 原文："能够快速跑通、复现开源 Benchmark"） | 一份 benchmark 复现报告 |
 | 第 2 个月 | **AG-6 工具权限**（给工具分角色：读 / 写 / 管理） | [Agent 开发工程师](job-market/positions/agent-engineer/README.md) | 演示：低权限角色调不动删除工具 |
 | 第 2 个月 | **FDE 沟通线 C 栏 7 条**（含"3 份模糊需求 → 一页方案"、"对不切实际的期望说不"） | [FDE](job-market/positions/fde/学习计划.md) | 一页方案 × 3 |
 | 第 3 个月 | MCP 从"能跑"升级到"能交付"（权限、审计、错误处理、超时） | [FDE](job-market/positions/fde/README.md) | 一个能被别人用的 MCP server |

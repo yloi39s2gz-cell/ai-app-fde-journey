@@ -40,16 +40,28 @@
 | 8 | **安全**（防 prompt 注入、防工具越权） | ✅ [stage2/injection_demo.py](../../ai-app/stage2/injection_demo.py) | 需升级为"工具权限" |
 | 9 | LangChain / LangGraph / LlamaIndex | ❌ | 学习 5 天 |
 | 10 | 服务化（Agent 要能被调用） | ❌ | FastAPI 包装 |
+| **11** | **ReAct / CoT 等推理框架**（10-08 新增要求项） | 🟡 你的 stage4 循环**本质就是 ReAct**（思考→调工具→观察），但你没用这个名字讲过 | 零成本：写 notes 时把 stage4 的循环**明确命名为 ReAct** 并说清 think/act/observe 三段 |
+| **12** | **AutoGen**（10-08 新增要求项，与 LangChain 并列提出） | ❌ | **不学**。记在这里只为知道它存在；LangGraph 覆盖同类需求，学两个框架是浪费 |
+
+> **第 11 / 12 行的来源**：Zoom 的 AI Agent 开发工程师 JD（杭州，硕士+2 年）原文要求
+> "精通 Transformer 架构及主流 LLM 技术栈（如 LangChain、**AutoGen**），熟悉 LLM 微调、推理优化及评估方法论"，
+> "**具备多智能体系统开发经验，掌握 ReAct、CoT 等推理框架**"。
+> 来源：https://careers.mavenventures.com/companies/zoom/jobs/48941694-ai-agent（已抓，非摘要）
+>
+> **为什么 AutoGen 记为"不学"**：JD 里是"如 LangChain、AutoGen"的**举例式列举**，不是必须两个都会。
+> 面试时能说清"我选 LangGraph 是因为需要状态持久化和人在回路，AutoGen 更偏对话式多 Agent"比"两个都摸过一遍"得分高。
+> ——这也是 [爆火岗位雷达](../../radar/爆火岗位雷达.md) 里"写下不做什么"原则的具体应用。
 
 ---
 
 ## 4. 你的匹配度：**本清单里最高**
 
 ```
-要求 10 项：
-✅ 已达标 3 项（Agent 循环 / trace / 注入防御）
+要求 12 项（10-08 由 10 项增至 12 项）：
+✅ 已达标 3 项（Agent 循环 / trace / 注入防御）+ 1 项待"改名称"（ReAct）
 🟡 有基础 3 项（工具定义 / 工具设计 / 评测）
 ❌ 缺失 4 项（多 Agent / 状态持久化 / 框架 / 服务化）
+🚫 明确不学 1 项（AutoGen）
 ```
 
 对比 [AI 应用工程师](../ai-application-engineer/README.md)（3 项全缺硬缺口：服务化/容器/云），
