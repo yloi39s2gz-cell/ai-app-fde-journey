@@ -32,6 +32,11 @@ def find_tickets(
     keyword: str,
     status: str | None = None,
 ) -> list[dict]:
+    result=[]
+    for t in tickets:
+        if keyword.lower() in t["title"].lower():
+            result.append(t)
+    return result
     # 在这里写。先别往下看。
     #
     # 卡住的话，把"我卡在哪"写在这行下面，然后继续想。
