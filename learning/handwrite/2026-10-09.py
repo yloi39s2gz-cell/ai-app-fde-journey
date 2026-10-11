@@ -34,7 +34,7 @@ def find_tickets(
 ) -> list[dict]:
     result=[]
     for t in tickets:
-        if keyword.lower() in t["title"].lower():
+        if keyword.lower() in t["title"].lower() and (status is None or t["status"]==status):
             result.append(t)
     return result
     # 在这里写。先别往下看。
