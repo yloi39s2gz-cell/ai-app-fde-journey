@@ -35,12 +35,8 @@ def find_tickets(
     result=[]
     for t in tickets:
         if keyword.lower() in t["title"].lower() and (status is None or t["status"]==status):
-            result.append(t)
-    return result
-    # 在这里写。先别往下看。
-    #
-    # 卡住的话，把"我卡在哪"写在这行下面，然后继续想。
-    raise NotImplementedError
+            result.append(dict(t))  # 原来是 append(t)，改成包一层 dict()，约束5：返回全新dict，不跟原列表共用对象
+    return sorted(result, key=lambda x: x["id"])  # 原来是 return result，改成按id排好再返，约束4
 
 
 # ---------------------------------------------------------------------
